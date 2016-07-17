@@ -1,0 +1,20 @@
+{
+	"name": "react-native-paypal",
+	"version": "0.0.1",
+	"description": "Paypal module for react native",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/narayananvenk/react-native-paypal.git"
+	},
+	"keywords": [
+		"react-native",
+		"paypal"
+	],
+	"author": "narayanan",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/narayananvenk/react-native-paypal/issues"
+	},
+	"homepage": "https://github.com/narayananvenk/react-native-paypal#readme"
+}
