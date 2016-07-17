@@ -89,15 +89,10 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 		activity.startService(intent);
 	}
 
-	@ReactMethod
-	public void singlePayment(final ReadableMap params, final Callback successCallback, final Callback failureCallback) {
-		this.paymentSuccessCallback = successCallback;
-		this.paymentFailureCallback = failureCallback;
-
+	private PayPalPayment createPayment(final ReadableMap params) {
 		final BigDecimal amount = new BigDecimal(params.getString("amount"));
 		final String currency = params.getString("currency");
 		final String description = params.getString("description");
-		this.requestedCode = REQUEST_CODE_SINGLE_PAYMENT;
 
 		PayPalPayment payment = new PayPalPayment(amount, currency, description, PayPalPayment.PAYMENT_INTENT_SALE);
 
@@ -113,9 +108,26 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 		if(params.hasKey("softDescriptor"))
 			payment.softDescriptor(params.getString("softDescriptor"));
 
+		return payment;
+	}
+
+	@ReactMethod
+	public void isProcessable(final ReadableMap params, final Callback callback) {
+		PayPalPayment payment = createPayment(params);
+
+		callback.invoke(payment.isProcessable());
+	}
+
+	@ReactMethod
+	public void singlePayment(final ReadableMap params, final Callback successCallback, final Callback failureCallback) {
+		this.paymentSuccessCallback = successCallback;
+		this.paymentFailureCallback = failureCallback;
+
+		this.requestedCode = REQUEST_CODE_SINGLE_PAYMENT;
+
 		Intent intent = new Intent(activity, PaymentActivity.class);
 		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, createPayment(params));
 
 		activity.startActivityForResult(intent, this.requestedCode);
 	}
