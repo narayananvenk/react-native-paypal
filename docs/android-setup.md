@@ -13,8 +13,8 @@
 * In android/settings.gradle, add the foloowing:
 
 ```
-include ':rn-paypal'
-project(':rn-paypal').projectDir = new File(rootProject.projectDir, '../node_modules/rn-paypal/android')
+include ':react-native-paypal'
+project(':react-native-paypal').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-paypal/android')
 ```
 
 * In android/app/build.gradle, add the following:
@@ -22,7 +22,7 @@ project(':rn-paypal').projectDir = new File(rootProject.projectDir, '../node_mod
 ```
 dependencies {
 	//...
-    compile project(':rn-paypal')
+    compile project(':react-native-paypal')
 	//...
 }
 ```
