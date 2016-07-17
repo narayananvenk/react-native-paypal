@@ -3,12 +3,13 @@
 ##Setup:
 
 1. [Android setup](/docs/android-setup.md)
+2. import Paypal from "react-native-paypal";
 
 ##Methods:
 
 1. configure(&lt;params object&gt;)
 
-	Configure Paypal for single payment.
+	Configure Paypal for single payment. Call this only once in your application.
 	
 	<table>
 		<tr>
