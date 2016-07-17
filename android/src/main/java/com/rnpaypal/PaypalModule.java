@@ -120,6 +120,11 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 		activity.startActivityForResult(intent, this.requestedCode);
 	}
 
+	@ReactMethod
+	public void logout() {
+		PayPalService.clearAllUserData(getReactApplicationContext().getApplicationContext());
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == this.requestedCode) {
