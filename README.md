@@ -64,9 +64,9 @@
 		</tr>
 	</table>
 
-2. isProcessable(&lt;params object&gt;)
+2. isProcessable(&lt;params object&gt;, &lt;callback&gt;)
 	
-	Checks if the payment object can be processed. It will return false for cases such as negative amount, currency string not recognized etc.  
+	Checks if the payment object can be processed. The callback returns false for cases such as negative amount, currency string not recognized etc.  
 
 	<table>
 		<tr>
