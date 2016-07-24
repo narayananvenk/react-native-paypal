@@ -3,7 +3,8 @@
 ##Setup:
 
 1. [Android setup](/docs/android-setup.md)
-2. import Paypal from "react-native-paypal";
+2. [iOS setup](/docs/ios-setup.md)
+3. import Paypal from "react-native-paypal";
 
 ##Methods:
 
