@@ -128,7 +128,7 @@
 
 3. singlePayment(&lt;params object&gt;, &lt;success callback&gt;, &lt;failure callback&gt;)
 
-	Process a single payment using the sdk. The success callback will return a confirmation object. The failure callback can have one of 2 error codes, Paypal.ERROR_USER_CANCELED or Paypal.ERROR_INVALID_CONFIG (only for android).
+	Process a single payment using the sdk. The success callback will return a confirmation object. Sample confirmation object and steps to verify payment can be found [here](https://developer.paypal.com/docs/integration/mobile/verify-mobile-payment/). The failure callback can have one of 2 error codes, Paypal.ERROR_USER_CANCELED or Paypal.ERROR_INVALID_CONFIG (only for android).
 
 	&lt;params object&gt; is the same as defined for isProcessable.
 
