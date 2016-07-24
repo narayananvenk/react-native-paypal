@@ -9,7 +9,7 @@
 
 ####Method 2
 
-* Add rn-paypal as an npm dependency to your project.
+* Add `react-native-paypal` as an npm dependency to your project.
 * In android/settings.gradle, add the foloowing:
 
 ```
