@@ -10,7 +10,7 @@
 1. configure(&lt;params object&gt;)
 
 	Configure Paypal for single payment. Call this only once in your application.
-	
+
 	<table>
 		<tr>
 			<th colspan=4>&lt;params object&gt;</th>
@@ -66,7 +66,7 @@
 	</table>
 
 2. isProcessable(&lt;params object&gt;, &lt;callback&gt;)
-	
+
 	Checks if the payment object can be processed. The callback returns false for cases such as negative amount, currency string not recognized etc.  
 
 	<table>
@@ -125,11 +125,10 @@
 
 3. singlePayment(&lt;params object&gt;, &lt;success callback&gt;, &lt;failure callback&gt;)
 
-	Process a single payment using the sdk. The success callback will return 2 JSON objects (confirmation and payment). The failure callback can have one of 2 error codes, Paypal.ERROR_USER_CANCELED or Paypal.ERROR_INVALID_CONFIG.
-	
+	Process a single payment using the sdk. The success callback will return a confirmation object. The failure callback can have one of 2 error codes, Paypal.ERROR_USER_CANCELED or Paypal.ERROR_INVALID_CONFIG (only for android).
+
 	&lt;params object&gt; is the same as defined for isProcessable.
 
 4. logout()
 
 	Deletes all remembered user data (credit cards, paypal account, email, phone). This can be used while logging out a user in the app.
-

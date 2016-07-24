@@ -146,7 +146,7 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 
 					if(confirm != null) {
 						//invoke callback with confirmation and payment objects
-						paymentSuccessCallback.invoke(confirm.toJSONObject().toString(), confirm.getPayment().toJSONObject().toString());
+						paymentSuccessCallback.invoke(confirm.toJSONObject().toString());
 					}
 
 					break;
