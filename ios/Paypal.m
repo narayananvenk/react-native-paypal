@@ -119,7 +119,6 @@ RCT_EXPORT_METHOD(logout) {
 	NSLog(@"Paypal payment cancelled");
 	[paymentViewController.presentingViewController dismissViewControllerAnimated:YES completion:^{
 		if(self.failureCallback) {
-			NSLog(@"callback is there");
 			self.failureCallback(@[ERROR_USER_CANCELED]);
 		}
 	}];
