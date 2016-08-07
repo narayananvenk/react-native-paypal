@@ -23,18 +23,18 @@ RCT_EXPORT_METHOD(configure: (NSDictionary *)params) {
 		[self.configuration setAcceptCreditCards:acceptCreditCards];
 
 		if([params objectForKey:@"defaultUserEmail"]) {
-				NSString *defaultUserEmail = params[@"defaultUserEmail"];
-				[self.configuration setDefaultUserEmail:defaultUserEmail];
+			NSString *defaultUserEmail = params[@"defaultUserEmail"];
+			[self.configuration setDefaultUserEmail:defaultUserEmail];
 		}
 
 		if([params objectForKey:@"defaultUserPhone"]) {
-				NSString *defaultUserPhone = params[@"defaultUserPhone"];
-				[self.configuration setDefaultUserPhoneNumber:defaultUserPhone];
+			NSString *defaultUserPhone = params[@"defaultUserPhone"];
+			[self.configuration setDefaultUserPhoneNumber:defaultUserPhone];
 		}
 
 		if([params objectForKey:@"defaultUserPhoneCountryCode"]) {
-				NSString *defaultUserPhoneCountryCode = params[@"defaultUserPhoneCountryCode"];
-				[self.configuration setDefaultUserPhoneCountryCode:defaultUserPhoneCountryCode];
+			NSString *defaultUserPhoneCountryCode = params[@"defaultUserPhoneCountryCode"];
+			[self.configuration setDefaultUserPhoneCountryCode:defaultUserPhoneCountryCode];
 		}
 
 	});
