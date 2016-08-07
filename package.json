@@ -1,5 +1,5 @@
 {
-	"name": "react-native-paypal-mobile",
+	"name": "react-native-paypal",
 	"version": "0.0.1",
 	"description": "Paypal module for react native",
 	"main": "index.js",
