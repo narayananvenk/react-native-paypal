@@ -185,4 +185,9 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 			}
 		}
 	}
+
+	@Override
+	public void onNewIntent(Intent intent) {
+		//Do nothing
+	}
 }
