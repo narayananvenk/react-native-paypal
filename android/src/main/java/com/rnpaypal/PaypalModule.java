@@ -2,6 +2,8 @@ package com.rnpaypal;
 
 import android.content.Intent;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -175,6 +177,12 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 
 	@Override
 	public void onHostDestroy() {
-		activity.stopService(new Intent(activity, PayPalService.class));
+		ActivityManager activityManager = (ActivityManager) getReactApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+		for(ActivityManager.RunningServiceInfo currentService: activityManager.getRunningServices(Integer.MAX_VALUE)) {
+			if(currentService.service.getClassName().equals(PayPalService.class.getName())) {
+				activity.stopService(new Intent(activity, PayPalService.class));
+			}
+		}
 	}
 }
