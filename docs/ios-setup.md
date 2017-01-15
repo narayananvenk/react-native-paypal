@@ -4,4 +4,4 @@
 2. Add `react-native-paypal` as an npm dependency to your project.
 3. Open the project in Xcode and add the files in /ios folder to your project (make sure `Copy items if needed` is checked).
 
-* In PodFile, specify PayPal version as `pod 'PayPal-iOS-SDK', '2.16.1'`.
+##### In PodFile, specify Paypal version as `pod 'PayPal-iOS-SDK', '2.16.1'`.
