@@ -5,6 +5,7 @@
 ####Method 1
 
 * Add `react-native-paypal` as an npm dependency to your project.
+* Use `react-native link` to automatically link the library.
 
 ####Method 2
 
