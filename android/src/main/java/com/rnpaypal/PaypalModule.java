@@ -140,7 +140,7 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
 		if(requestCode == this.requestedCode) {
 			switch(resultCode) {
 				case Activity.RESULT_OK: {
@@ -148,7 +148,7 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 
 					if(confirm != null) {
 						//invoke callback with confirmation and payment objects
-						paymentSuccessCallback.invoke(confirm.toJSONObject().toString());
+						paymentSuccessCallback.invoke(ReactUtils.jsonObjectToWritableMap(confirm.toJSONObject()));
 					}
 
 					break;

@@ -16,6 +16,6 @@ android {
 
 	dependencies {
 		compile "com.facebook.react:react-native:+"
-		compile 'com.paypal.sdk:paypal-android-sdk:2.14.4'
+		compile 'com.paypal.sdk:paypal-android-sdk:2.15.1'
 	}
 }

@@ -5,7 +5,6 @@
 ####Method 1
 
 * Add `react-native-paypal` as an npm dependency to your project.
-* Use `rnpm link` to automatically link the library.
 
 ####Method 2
 
@@ -29,7 +28,7 @@ dependencies {
 
 ###2. Add the module to your activity
 
-* For react native versions <= 0.28, add the following to your MainActivity.java. For react native versions >= 0.29, add the following to your MainApplication.java
+* Add the following to your MainApplication.java
 
 ```
 import com.rnpaypal.PaypalPackage;

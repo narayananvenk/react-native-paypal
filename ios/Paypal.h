@@ -1,5 +1,5 @@
 #import "PayPalMobile.h"
-#import "RCTBridgeModule.h"
+#import "React/RCTBridgeModule.h"
 
 @interface Paypal : UIViewController <PayPalPaymentDelegate, RCTBridgeModule>
 
