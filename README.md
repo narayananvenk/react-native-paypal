@@ -6,7 +6,7 @@
 2. [iOS setup](/docs/ios-setup.md)
 3. import Paypal from "react-native-paypal";
  
-#####This module supports Paypal versions 2.15.1 for android and 2.16.1 for iOS.
+#####This module supports Paypal versions 2.15.2 for android and 2.16.1 for iOS.
 
 ##Methods:
 
