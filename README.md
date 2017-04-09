@@ -1,14 +1,14 @@
 # Paypal for React Native
 
-##Setup:
+## Setup:
 
 1. [Android setup](/docs/android-setup.md)
 2. [iOS setup](/docs/ios-setup.md)
 3. import Paypal from "react-native-paypal";
  
-#####This module supports Paypal versions 2.15.2 for android and 2.16.1 for iOS.
+##### This module supports Paypal versions 2.15.3 for android and 2.16.3 for iOS.
 
-##Methods:
+## Methods:
 
 1. configure(&lt;params object&gt;)
 
@@ -28,7 +28,7 @@
 			<td>environment</td>
 			<td>String</td>
 			<td></td>
-			<td>Paypal.SANDBOX, Paypal.NO_NETWORK, Paypal.PRODUCTION</td>
+			<td>Paypal.SANDBOX<br/>Paypal.NO_NETWORK<br/>Paypal.PRODUCTION</td>
 		</tr>
 		<tr>
 			<td>clientId</td>
@@ -45,8 +45,8 @@
 		<tr>
 			<td>acceptCreditCards</td>
 			<td>boolean</td>
-			<td></td>
-			<td>Indicate whether credit card support should be enabled</td>
+			<td>Yes</td>
+			<td>Indicate whether credit card support should be enabled. Defaults to true</td>
 		</tr>
 		<tr>
 			<td>defaultUserEmail</td>
@@ -66,6 +66,12 @@
 			<td>Yes</td>
 			<td></td>
 		</tr>
+		<tr>
+			<td>rememberUser</td>
+			<td>boolean</td>
+			<td>Yes</td>
+			<td>Defaults to true</td>
+		</tr>
 	</table>
 
 2. isProcessable(&lt;params object&gt;, &lt;callback&gt;)
@@ -84,7 +90,7 @@
 		</tr>
 		<tr>
 			<td>amount</td>
-			<td>String</td>
+			<td>Number</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -122,6 +128,103 @@
 			<td>softDescriptor</td>
 			<td>String</td>
 			<td>Yes</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>shippingAddress</td>
+			<td>Object</td>
+			<td>Yes</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>paymentDetails</td>
+			<td>Object</td>
+			<td>Yes</td>
+			<td></td>
+		</tr>
+	</table>
+	
+	
+	<table>
+		<tr>
+			<th colspan=4>&lt;shippingAddress object&gt;</th>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<th>Type</th>
+			<th>Optional</th>
+			<th>Description</th>
+		</tr>
+			<tr>
+			<td>recipientName</td>
+			<td>String</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>line1</td>
+			<td>String</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>line2</td>
+			<td>String</td>
+			<td>Yes</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>postalCode</td>
+			<td>String</td>
+			<td>Yes</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>city</td>
+			<td>String</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>state</td>
+			<td>String</td>
+			<td>Yes</td>
+			<td></td>
+		</tr>
+			<tr>
+			<td>countryCode</td>
+			<td>String</td>
+			<td>Yes</td>
+			<td></td>
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<th colspan=4>&lt;paymentDetails object&gt;</th>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<th>Type</th>
+			<th>Optional</th>
+			<th>Description</th>
+		</tr>
+			<tr>
+			<td>shipping</td>
+			<td>Number</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>subtotal</td>
+			<td>Number</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>tax</td>
+			<td>Number</td>
+			<td></td>
 			<td></td>
 		</tr>
 	</table>

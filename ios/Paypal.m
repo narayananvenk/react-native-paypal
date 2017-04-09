@@ -14,14 +14,17 @@ RCT_EXPORT_METHOD(configure: (NSDictionary *)params) {
 		NSString *environment = params[@"environment"];
 		NSString *clientId = params[@"clientId"];
 		NSString *merchantName = params[@"merchantName"];
-		bool acceptCreditCards = (bool) params[@"acceptCreditCards"];
 
 		[PayPalMobile initializeWithClientIdsForEnvironments:@{environment: clientId}];
 		[PayPalMobile preconnectWithEnvironment:environment];
 
 		[self.configuration setMerchantName:merchantName];
-		[self.configuration setAcceptCreditCards:acceptCreditCards];
 
+		if([params objectForKey:@"acceptCreditCards"]) {
+			bool acceptCreditCards = (bool) params[@"acceptCreditCards"];
+			[self.configuration setAcceptCreditCards:acceptCreditCards];
+		}
+		
 		if([params objectForKey:@"defaultUserEmail"]) {
 			NSString *defaultUserEmail = params[@"defaultUserEmail"];
 			[self.configuration setDefaultUserEmail:defaultUserEmail];
@@ -37,19 +40,24 @@ RCT_EXPORT_METHOD(configure: (NSDictionary *)params) {
 			[self.configuration setDefaultUserPhoneCountryCode:defaultUserPhoneCountryCode];
 		}
 
+		if([params objectForKey:@"rememberUser"]) {
+			bool rememberUser = (bool) params[@"rememberUser"];
+			[self.configuration setRememberUser:rememberUser];
+		}
 	});
 }
 
 - (PayPalPayment *) createPayment:(NSDictionary *)params {
 	PayPalPayment *payment = [[PayPalPayment alloc] init];
 
-	NSString *amount = params[@"amount"];
+	double amount = [[params objectForKey:@"amount"] doubleValue];
 	NSString *currency = params[@"currency"];
 	NSString *description = params[@"description"];
 
-	payment.amount = [[NSDecimalNumber alloc] initWithString:amount];
+	payment.amount = [[NSDecimalNumber alloc] initWithDouble:amount];
 	payment.currencyCode = currency;
 	payment.shortDescription = description;
+	payment.intent = PayPalPaymentIntentSale;
 
 	if([params objectForKey:@"bnCode"]) {
 		NSString *bnCode = params[@"bnCode"];
@@ -69,6 +77,58 @@ RCT_EXPORT_METHOD(configure: (NSDictionary *)params) {
 	if([params objectForKey:@"softDescriptor"]) {
 		NSString *softDescriptor = params[@"softDescriptor"];
 		payment.softDescriptor = softDescriptor;
+	}
+
+	if([params objectForKey:@"shippingAddress"]) {
+		NSDictionary *address = params[@"shippingAddress"];
+
+		PayPalShippingAddress *shippingAddress = [[PayPalShippingAddress alloc] init];
+
+		NSString *line1 = address[@"line1"];
+		shippingAddress.line1 = line1;
+
+		NSString *city = address[@"city"];
+		shippingAddress.city = city;
+
+		NSString *recipientName = address[@"recipientName"];
+		shippingAddress.recipientName = recipientName;
+
+		if([address objectForKey:@"line2"]) {
+			NSString *line2 = address[@"line2"];
+			shippingAddress.line2 = line2;
+		}
+
+		if([address objectForKey:@"postalCode"]) {
+			NSString *postalCode = address[@"postalCode"];
+			shippingAddress.postalCode = postalCode;
+		}
+
+		if([address objectForKey:@"state"]) {
+			NSString *state = address[@"state"];
+			shippingAddress.state = state;
+		}
+
+		if([address objectForKey:@"countryCode"]) {
+			NSString *countryCode = address[@"countryCode"];
+			shippingAddress.countryCode = countryCode;
+		}
+
+		payment.shippingAddress = shippingAddress;
+	}
+
+	if([params objectForKey:@"paymentDetails"]) {
+		NSDictionary *details = params[@"paymentDetails"];
+
+		double subtotal = [[details objectForKey:@"subtotal"] doubleValue];
+		double shipping = [[details objectForKey:@"shipping"] doubleValue];
+		double tax =[[details objectForKey:@"tax"] doubleValue];
+
+		PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails
+			paymentDetailsWithSubtotal: [[NSDecimalNumber alloc] initWithDouble:subtotal]
+			withShipping: [[NSDecimalNumber alloc] initWithDouble:shipping]
+			withTax: [[NSDecimalNumber alloc] initWithDouble:tax]];
+
+		payment.paymentDetails = paymentDetails;
 	}
 
 	return payment;

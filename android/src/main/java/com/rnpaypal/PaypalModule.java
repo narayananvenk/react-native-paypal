@@ -21,6 +21,8 @@ import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
+import com.paypal.android.sdk.payments.ShippingAddress;
+import com.paypal.android.sdk.payments.PayPalPaymentDetails;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -73,9 +75,11 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 		final String environment = params.getString("environment");
 		final String clientId = params.getString("clientId");
 		final String merchantName = params.getString("merchantName");
-		final boolean acceptCreditCards = params.getBoolean("acceptCreditCards");
 
-		config = new PayPalConfiguration().environment(environment).clientId(clientId).merchantName(merchantName).acceptCreditCards(acceptCreditCards);
+		config = new PayPalConfiguration().environment(environment).clientId(clientId).merchantName(merchantName);
+
+		if(params.hasKey("acceptCreditCards"))
+			config.acceptCreditCards(params.getBoolean("acceptCreditCards"));
 
 		if(params.hasKey("defaultUserEmail"))
 			config.defaultUserEmail(params.getString("defaultUserEmail"));
@@ -86,13 +90,51 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 		if(params.hasKey("defaultUserPhoneCountryCode"))
 			config.defaultUserPhoneCountryCode(params.getString("defaultUserPhoneCountryCode"));
 
+		if(params.hasKey("rememberUser"))
+			config.rememberUser(params.getBoolean("rememberUser"));
+
 		Intent intent = new Intent(activity, PayPalService.class);
 		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
 		activity.startService(intent);
 	}
 
+	private PayPalPaymentDetails createPaymentDetails(final ReadableMap params) {
+		final BigDecimal subtotal = new BigDecimal(params.getDouble("subtotal"));
+		final BigDecimal shipping = new BigDecimal(params.getDouble("shipping"));
+		final BigDecimal tax = new BigDecimal(params.getDouble("tax"));
+
+		PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(shipping, subtotal, tax);
+		return(paymentDetails);
+	}
+
+	private ShippingAddress createShippingAddress(final ReadableMap params) {
+		ShippingAddress shippingAddress = new ShippingAddress();
+
+		shippingAddress.line1(params.getString("line1"));
+		shippingAddress.city(params.getString("city"));
+		shippingAddress.recipientName(params.getString("recipientName"));
+
+		if(params.hasKey("line2"))
+			shippingAddress.line2(params.getString("line2"));
+
+		if(params.hasKey("postalCode"))
+			shippingAddress.postalCode(params.getString("postalCode"));
+
+		if(params.hasKey("state"))
+			shippingAddress.postalCode(params.getString("state"));
+
+		if(params.hasKey("countryCode"))
+			shippingAddress.countryCode(params.getString("countryCode"));
+
+		return(shippingAddress);
+	}
+
 	private PayPalPayment createPayment(final ReadableMap params) {
-		final BigDecimal amount = new BigDecimal(params.getString("amount"));
+		return(this.createPayment(params, true, true));
+	}
+	
+	private PayPalPayment createPayment(final ReadableMap params, final boolean addShippingAddress, final boolean addPaymentDetails) {
+		final BigDecimal amount = new BigDecimal(params.getDouble("amount"));
 		final String currency = params.getString("currency");
 		final String description = params.getString("description");
 
@@ -110,14 +152,31 @@ public class PaypalModule extends ReactContextBaseJavaModule implements Activity
 		if(params.hasKey("softDescriptor"))
 			payment.softDescriptor(params.getString("softDescriptor"));
 
+		if(addShippingAddress && params.hasKey("shippingAddress"))
+			payment.providedShippingAddress(this.createShippingAddress(params.getMap("shippingAddress")));
+
+		if(addPaymentDetails && params.hasKey("paymentDetails"))
+			payment.paymentDetails(this.createPaymentDetails(params.getMap("paymentDetails")));
+
 		return payment;
 	}
 
 	@ReactMethod
 	public void isProcessable(final ReadableMap params, final Callback callback) {
-		PayPalPayment payment = createPayment(params);
+		PayPalPayment payment = createPayment(params, false, false);
+		boolean result = payment.isProcessable();
 
-		callback.invoke(payment.isProcessable());
+		if(params.hasKey("shippingAddress")) {
+			ShippingAddress shippingAddress = this.createShippingAddress(params.getMap("shippingAddress"));
+			result = result && shippingAddress.isProcessable();
+		}
+
+		if(params.hasKey("paymentDetails")) {
+			PayPalPaymentDetails paymentDetails = this.createPaymentDetails(params.getMap("paymentDetails"));
+			result = result && paymentDetails.isProcessable();
+		}
+		
+		callback.invoke(result);
 	}
 
 	@ReactMethod
